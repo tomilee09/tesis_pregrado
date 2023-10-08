@@ -27,6 +27,15 @@ recover_branches:       #Unidades que debería ser
   - MET                 #(GeV)
   - scale1fb            #Escala luminosidad Femto-barn? # USADO PARA PESOS
   - intLumi             #Escala luminosidad Femto-barn? # USADO PARA PESOS
+  # nuevas variables usadas por cristobal
+  - jet1_pt
+  - jet1_eta
+  - jet1_phi
+  - jet1_e
+  - jet2_pt
+  - jet2_eta
+  - jet2_phi
+  - jet2_e
   # los de abajo no son usados
   # - min_dphi_jetmet     #(GeV) creo
   # - neleSignal          #N de señal

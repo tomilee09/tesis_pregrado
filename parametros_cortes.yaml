@@ -1,0 +1,41 @@
+VBF:
+  VBF_500757: data/samples/VBF/frvz_vbf_500757.root
+  VBF_500758: data/samples/VBF/frvz_vbf_500758.root
+  VBF_500759: data/samples/VBF/frvz_vbf_500759.root
+  VBF_500760: data/samples/VBF/frvz_vbf_500760.root
+  VBF_500761: data/samples/VBF/frvz_vbf_500761.root
+  VBF_500762: data/samples/VBF/frvz_vbf_500762.root
+  VBF_500763: data/samples/VBF/frvz_vbf_500763.root
+  VBF_500764: data/samples/VBF/frvz_vbf_500764.root
+  
+ggF:
+  ggF_508885: data/samples/ggF/frvz_ggf_508885.root
+  ggF_508886: data/samples/ggF/frvz_ggf_508886.root
+  ggF_508887: data/samples/ggF/frvz_ggf_508887.root
+  ggF_508888: data/samples/ggF/frvz_ggf_508888.root
+  ggF_508889: data/samples/ggF/frvz_ggf_508889.root
+  ggF_508890: data/samples/ggF/frvz_ggf_508890.root
+  ggF_508891: data/samples/ggF/frvz_ggf_508891.root
+  ggF_508892: data/samples/ggF/frvz_ggf_508892.root
+  ggF_508893: data/samples/ggF/frvz_ggf_508893.root
+
+recover_branches:       #Unidades que debería ser     
+  - njet30              # unico corte que hace sin ML
+  - mjj                 #(GeV)                       
+  - MET                 #(GeV)
+  - scale1fb            #Escala luminosidad Femto-barn? # USADO PARA PESOS
+  - intLumi             #Escala luminosidad Femto-barn? # USADO PARA PESOS
+  
+detector_consts :
+  mevGev: 1000  
+  lum: 140 # Luminosity @ LHC Run-2 (fb-1)
+
+cuts:   
+  # mjj: [1000000, .inf]                #VBF FILTER: MJJ
+  # MET: [225000, .inf]                 #MET ORIGINAL
+  njet30: [1, .inf]                   #VBF FILTER: JETS >= 2  Falta el que esto se cumple con P_t > 30
+
+scale_variable:
+  # mjj: 0.001
+  # MET: 0.001
+  njet30: 1
