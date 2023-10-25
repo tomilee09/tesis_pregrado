@@ -2,6 +2,59 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+##########################################################################
+############################### DO CUTS ##################################
+##########################################################################
+
+#Se le da el corte
+# se realizan los cortes superiores e inferiores a una lista de dataframes
+def do_cuts(df_all, cuts, scale):
+
+    # se aplican todos los cortes
+    for variable in cuts:
+        # se grafica el numero de eventos
+        numero_eventos_antes = df_all.shape[0]
+        print(f'Numero eventos antes: {numero_eventos_antes}')
+        
+        #Definimos si el corte es un booleano. Se ocupa cuando se quieren cortar cosas del estilo Triggers
+        if type(cuts[variable]) == type(True):
+            print(f'Corte: {variable} == {cuts[variable]}')
+            df_all = df_all[df_all[variable] == cuts[variable]]
+
+            
+        #Definimos si el corte es una lista, esto se ocupa para cuando se quieren cortar máximos y mínimos.   
+        elif type(cuts[variable]) == type([]):
+            corte_menor = cuts[variable][0]*scale[variable]
+            corte_mayor = cuts[variable][1]*scale[variable]
+            
+            print(f'Corte: {variable} entre {cuts[variable]}')
+            df_all = df_all[df_all[variable] < corte_mayor]
+            df_all = df_all[df_all[variable] > corte_menor]
+
+        
+        #Definimos si el corte es un número entero. Se ocupa para cuando queremos separar los datos que tienen que ser un valor específico como un veto.
+        elif type(cuts[variable]) == type(0):
+            print(f'Corte: {variable} == {cuts[variable]}')
+            df_all = df_all[df_all[variable] == cuts[variable]]
+
+
+        # elif type(cuts[variable]) == type(''):
+        #     print(f'Corte: {variable} == {cuts[variable]}')
+        #     df_all = df_all[df_all[variable] == cuts[variable]]
+            
+        else:
+            print("ADVERTENCIA: NO TOMA LA VARIABLE DEL CORTE")
+
+        numero_eventos_despues = df_all.shape[0]
+        print(f'Numero eventos despues: {numero_eventos_despues} \n')
+    
+    # elimino los pesos negativos
+    # weights = df_all["intLumi"]*df_all["scale1fb"]
+    df_all = df_all[df_all["intLumi"]*df_all["scale1fb"] >= 0]
+             
+    return df_all
+
+
 ################################################################################
 ############################### FIND BEST CUT ##################################
 ################################################################################
