@@ -1,17 +1,14 @@
 # funcion de xgboost que clasifica
 from xgboost import XGBClassifier
+from xgboost import XGBRegressor
 from sklearn.model_selection import GridSearchCV, cross_validate, cross_val_score
 from sklearn.metrics import accuracy_score
 
 # Hacer entrenamiento con XGBOOST
-def do_classification(X_train, y_train):
+def do_classification(X_train, y_train, params):
     # aqui se hace el machine learning, creo un modelo y lo entreno
-    modelo = XGBClassifier(learning_rate=0.05,
-                          max_depth=6,
-                          n_estimators=500,
-                          eval_metric=["logloss", "auc"]
-                          )
-    print("hola3")
+    # modelo = XGBClassifier(**params)
+    modelo = XGBRegressor(**params)
     modelo.fit(X_train, y_train)
     
     return modelo

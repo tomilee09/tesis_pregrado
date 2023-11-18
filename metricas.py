@@ -23,6 +23,7 @@ def grafico_decisiones(modelo):
 # ver presición del modelo
 def precision(modelo, X_test, y_test):
     y_pred = modelo.predict(X_test)
+    y_pred = y_pred>0.5
     accuracy = accuracy_score(y_test, y_pred)
     print(f'Precisión del modelo: {accuracy * 100:.2f}%')
 
@@ -37,8 +38,7 @@ def precision(modelo, X_test, y_test):
 #                 Predicción Positivo    Predicción Negativo
 # Actual Positivo        TN                    FP
 # Actual Negativo        FN                    TP
-def confusion(modelo, X_test, y_test):
-    y_pred = modelo.predict(X_test)
+def confusion(y_test, y_pred):
     m = confusion_matrix(y_test, y_pred)
     matriz = [[m[1][1], m[1][0]], [m[0][1], m[0][0]]]
     return matriz
@@ -84,17 +84,22 @@ def plot_matriz(matrix, porcentaje, normalizado):
 
 # es la matriz de confusión pero hecho en gráfico de barras en vez de un cuadrado
 def plot_confusion_barras(matrix):
+    
+    # Configurar el color del fondo y de las barras
+    fondo_color = "#05192d"
+    colores_hue = {"ggF": "#FF5733", "VBF": "#03ef62"}
+    blanco = "#ffffff"
 
     # normalizo los datos de vbf y ggf
     n_datos_vbf = matrix[0][0]+matrix[0][1]
     n_datos_ggf = matrix[1][0]+matrix[1][1]
-    datos = [matrix[0][0]/n_datos_vbf,matrix[0][1]/n_datos_vbf,
-            matrix[1][0]/n_datos_ggf,matrix[1][1]/n_datos_ggf]
+    datos = [matrix[1][1]/n_datos_ggf,matrix[1][0]/n_datos_ggf,
+             matrix[0][1]/n_datos_vbf,matrix[0][0]/n_datos_vbf]
 
     # creo un dataframe para realizar el gráfico más facilmente con seaborn
-    matriz_graficar = {'normalized value':datos,
-                       'true origin':["VBF", "VBF", "ggF", "ggF"],
-                       'classified as':["VBF", "ggf", "VBF", "ggf"],}
+    matriz_graficar = {'normalized value':datos, # cambié el orden para estar de acuerdo con los otros gráficos
+                       'true origin':["ggF", "ggF", "VBF", "VBF"],
+                       'classified as':["ggF", "VBF", "ggF", "VBF"],}
     df_matriz = pd.DataFrame(matriz_graficar)
 
     # realizo el gráfico
@@ -103,12 +108,40 @@ def plot_confusion_barras(matrix):
                 x='classified as', 
                 y ='normalized value',
                 hue = "true origin",
+                palette=colores_hue
                 )
+    
+    # color del fondo
+    ax.set_facecolor(fondo_color)
+    plt.gcf().set_facecolor(fondo_color)
+    
+    # Cambiar el color del borde del gráfico
+    ax.spines['top'].set_edgecolor(fondo_color)
+    ax.spines['right'].set_edgecolor(fondo_color)
+    ax.spines['bottom'].set_edgecolor(blanco)
+    ax.spines['left'].set_edgecolor(blanco)
+        
+    # Cambiar el color de las letras y números
+    color_letras_numeros = "#ffffff"
+    ax.tick_params(axis='both', colors=color_letras_numeros)
+    ax.xaxis.label.set_color(color_letras_numeros)
+    ax.yaxis.label.set_color(color_letras_numeros)
+    ax.title.set_color(color_letras_numeros)
+    
+    # Ajustar el tamaño de los números en los ejes
+    tamanio_numeros_ejes = 12
+    ax.tick_params(axis='both', labelsize=tamanio_numeros_ejes)
+    
+    # Ajustar el tamaño de las etiquetas de los ejes y el título
+    tamanio_etiquetas_ejes = 12
+    ax.xaxis.label.set_size(tamanio_etiquetas_ejes)
+    ax.yaxis.label.set_size(tamanio_etiquetas_ejes)
+    ax.title.set_size(tamanio_etiquetas_ejes)
     
     # Agregar los valores encima de las barras
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.3f}', (p.get_x() + p.get_width() / 2., p.get_height()),
-                    ha='center', va='center', fontsize=12, color='black', xytext=(0, 10),
+                    ha='center', va='center', fontsize=12, color='white', xytext=(0, 10),
                     textcoords='offset points')
     
     ax.legend(title="true origin", loc="upper center")

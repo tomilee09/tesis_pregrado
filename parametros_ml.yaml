@@ -159,7 +159,7 @@ cuts:
 
   # metTrig: True                       #MET Trigger
   
-  # # MET: [225000, .inf]                 #MET ORIGINAL
+  # MET: [225000, .inf]                 #MET ORIGINAL
   # MET: [160000, .inf]                 #MET CORTE POSIBLE PRESENTAR
 
   # # min_dphi_jetmet: [0.4, .inf]        #min Delta phi(jet, MET)
