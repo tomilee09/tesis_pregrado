@@ -83,7 +83,7 @@ def plot_matriz(matrix, porcentaje, normalizado):
 
 
 # es la matriz de confusión pero hecho en gráfico de barras en vez de un cuadrado
-def plot_confusion_barras(matrix):
+def plot_confusion_barras(matrix ,normalizado=True):
     
     # Configurar el color del fondo y de las barras
     fondo_color = "#05192d"
@@ -93,8 +93,14 @@ def plot_confusion_barras(matrix):
     # normalizo los datos de vbf y ggf
     n_datos_vbf = matrix[0][0]+matrix[0][1]
     n_datos_ggf = matrix[1][0]+matrix[1][1]
-    datos = [matrix[1][1]/n_datos_ggf,matrix[1][0]/n_datos_ggf,
-             matrix[0][1]/n_datos_vbf,matrix[0][0]/n_datos_vbf]
+    
+    if normalizado == True:
+        datos = [matrix[1][1]/n_datos_ggf,matrix[1][0]/n_datos_ggf,
+                 matrix[0][1]/n_datos_vbf,matrix[0][0]/n_datos_vbf]
+
+    else:
+        datos = [matrix[1][1],matrix[1][0],
+                 matrix[0][1],matrix[0][0]]
 
     # creo un dataframe para realizar el gráfico más facilmente con seaborn
     matriz_graficar = {'normalized value':datos, # cambié el orden para estar de acuerdo con los otros gráficos
@@ -110,6 +116,9 @@ def plot_confusion_barras(matrix):
                 hue = "true origin",
                 palette=colores_hue
                 )
+    
+    if normalizado == False:
+        ax.set_ylabel("number of events")
     
     # color del fondo
     ax.set_facecolor(fondo_color)
@@ -139,10 +148,19 @@ def plot_confusion_barras(matrix):
     ax.title.set_size(tamanio_etiquetas_ejes)
     
     # Agregar los valores encima de las barras
-    for p in ax.patches:
-        ax.annotate(f'{p.get_height():.3f}', (p.get_x() + p.get_width() / 2., p.get_height()),
-                    ha='center', va='center', fontsize=12, color='white', xytext=(0, 10),
-                    textcoords='offset points')
+    if normalizado == True:
+        for p in ax.patches:
+            ax.annotate(f'{p.get_height():.3f}', (p.get_x() + p.get_width() / 2., p.get_height()),
+                        ha='center', va='center', fontsize=12, color='white', xytext=(0, 10),
+                        textcoords='offset points')
+            
+    else:
+        for p in ax.patches:
+            value = p.get_height()
+            ax.annotate('{:,.0f}'.format(value), 
+                        (p.get_x() + p.get_width() / 2., p.get_height()),
+                        ha='center', va='center', fontsize=12, color='white', xytext=(0, 10),
+                        textcoords='offset points')
     
     ax.legend(title="true origin", loc="upper center")
 
