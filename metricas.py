@@ -227,3 +227,55 @@ def plot_ROC(modelo, X_test, y_test):
     plt.plot([0, 1], c="blue", label="random")
     plt.legend(loc="right")
     plt.show() 
+    
+
+
+
+
+
+# esto es un decorador para hacer lindo el gráfico
+def dar_estilo_plt(funcion):
+    def wrapper(*args, **kwargs):
+        # {"ggF": "#FF5733", "VBF": "#03ef62"}
+        fondo_color = "#05192d"
+        blanco = "#ffffff"
+        colores_hue = {"ggF": "#FF5733", "VBF": "#03ef62"}
+
+        fig, ax = funcion(*args, **kwargs)
+
+        # Personalizar el estilo del gráfico
+        fig.set_facecolor(fondo_color)
+        ax.set_facecolor(fondo_color)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_color(blanco)
+        ax.spines['left'].set_color(blanco)
+        ax.tick_params(axis='x', colors=blanco)
+        ax.tick_params(axis='y', colors=blanco)
+
+        plt.show()
+
+    return wrapper
+
+@dar_estilo_plt
+def plot_cantidad_ggf_vbf(n_ggF, n_VBF):
+    fig, ax = plt.subplots(figsize=[5, 5])
+    plt.bar("ggF", n_ggF, label='Value 1', color='#FF5733', edgecolor='none')
+    plt.bar("VBF", n_VBF, label='Value 2', color='#03ef62', edgecolor='none')
+
+    plt.ylabel('number of events', color='white')
+    
+    # Devolver fig, ax para que pueda ser personalizado por el decorador
+    return fig, ax
+
+
+
+@dar_estilo_plt
+def plot_number_events_hist(modelo, X_test):
+    y_pred = modelo.predict(X_test)
+    fig, ax = plt.subplots(figsize=[5, 5])
+    plt.hist(y_pred, bins = 20, edgecolor='white') # antes usaba sns
+    plt.ylabel('number of events', color='white')
+    plt.xlabel('probability of VBF', color='white')
+    
+    return fig, ax
