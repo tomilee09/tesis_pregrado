@@ -12,6 +12,12 @@ from sklearn.metrics import RocCurveDisplay
 from sklearn.metrics import roc_curve
 from sklearn.metrics import auc
 
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.cm import register_cmap
+import matplotlib
+
 # grafico las desiciones que tomo el arbol
 def grafico_decisiones(modelo):
     rcParams['figure.figsize'] = 200,500
@@ -279,3 +285,91 @@ def plot_number_events_hist(modelo, X_test):
     plt.xlabel('probability of VBF', color='white')
     
     return fig, ax
+
+
+
+
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.cm import register_cmap
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Decorador para personalizar el estilo del gráfico
+def dar_estilo_sns(func):
+    def wrapper(*args, **kwargs):
+        # Configuración del estilo del gráfico
+        fondo_color = "#05192d"
+        blanco = "#ffffff"
+        colores_hue = {"ggF": "#FF5733", "VBF": "#03ef62"}
+
+        # Llamar a la función decorada con los argumentos y argumentos de palabra clave
+        fig, ax = func(*args, **kwargs)
+
+        # Personalizar el estilo del gráfico
+        ax.set_facecolor(fondo_color)
+        plt.gcf().set_facecolor(fondo_color)
+        ax.spines['top'].set_edgecolor(fondo_color)
+        ax.spines['right'].set_edgecolor(fondo_color)
+        ax.spines['bottom'].set_edgecolor(blanco)
+        ax.spines['left'].set_edgecolor(blanco)
+
+        color_letras_numeros = "#ffffff"
+        ax.tick_params(axis='both', colors=color_letras_numeros)
+        ax.xaxis.label.set_color(color_letras_numeros)
+        ax.yaxis.label.set_color(color_letras_numeros)
+        ax.title.set_color(color_letras_numeros)
+
+        tamanio_numeros_ejes = 12
+        ax.tick_params(axis='both', labelsize=tamanio_numeros_ejes)
+
+        tamanio_etiquetas_ejes = 12
+        ax.xaxis.label.set_size(tamanio_etiquetas_ejes)
+        ax.yaxis.label.set_size(tamanio_etiquetas_ejes)
+        ax.title.set_size(tamanio_etiquetas_ejes)
+
+        plt.show()
+
+    return wrapper
+
+# Plot básico
+@dar_estilo_sns
+def plot_pca_2D(model, df_X, df_y):
+    pos = [0.0, 1.0]
+    ggF = "#FF5733"
+    VBF = "#03ef62"
+    colors = [ggF, VBF]
+    cmap = LinearSegmentedColormap.from_list("", list(zip(pos, colors)))
+    try:
+        register_cmap("cmap_presentacion", cmap)
+    except:
+        pass
+
+    scaler = StandardScaler()
+    x_scaled = scaler.fit_transform(df_X)
+
+    pca = PCA(n_components=2)
+    x_pca = pca.fit_transform(x_scaled)
+
+    df_plot = pd.DataFrame()
+    df_plot["x"] = x_pca[:, 0]
+    df_plot["y"] = x_pca[:, 1]
+    df_plot["color"] = df_y.to_numpy()
+
+    custom_palette = sns.color_palette([ggF, VBF])
+    cmap_custom = LinearSegmentedColormap.from_list('custom_palette', [ggF, VBF])
+
+    plt.figure(figsize=[5, 5])
+
+    ax = sns.scatterplot(data=df_plot,
+                         x="x",
+                         y="y",
+                         hue="color",
+                         palette=custom_palette,
+                        #  palette=sns.color_palette('cmap_presentacion', as_cmap = True), 
+                         alpha=0.1,
+                         linewidth=0)
+
+    return plt.gcf(), ax
