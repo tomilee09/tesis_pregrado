@@ -31,11 +31,11 @@ detector_consts :
   lum: 140 # Luminosity @ LHC Run-2 (fb-1)
 
 cuts:   
-  # mjj: [1000000, .inf]                #VBF FILTER: MJJ
+  mjj: [900000, .inf]                #VBF FILTER: MJJ
   # MET: [225000, .inf]                 #MET ORIGINAL
   njet30: [1, .inf]                   #VBF FILTER: JETS >= 2  Falta el que esto se cumple con P_t > 30
 
 scale_variable:
-  # mjj: 0.001
+  mjj: 0.001
   # MET: 0.001
   njet30: 1

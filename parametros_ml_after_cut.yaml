@@ -136,7 +136,7 @@ cuts:
   njet30: [1, .inf]                   #VBF FILTER: JETS >= 2  Falta el que esto se cumple con P_t > 30
   # detajj: [3, .inf]                   #VBF FILTER: Delta Eta_jj 
   # mjj: [1000000, .inf]                #VBF FILTER: MJJ
-  mjj: [900000, .inf]                #VBF FILTER: MJJ
+  # mjj: [900000, .inf]                #VBF FILTER: MJJ
 
 
   # dphijj: [-.inf, 2.048]                #max Delta phi (jet,jet) 
