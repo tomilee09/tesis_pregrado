@@ -145,3 +145,9 @@ def calc_weight(df):
 # def aplicar_weight(df_all, variable):
 #     df_all[variable] = df_all[variable]*calc_weight(df_all)
 # PREGUNTAR SI SE APLICA A TO-DO O SOLO ES PARA GRAFICAR
+
+def eficiencia_corte_matriz(matriz):
+    eventos_antes = matriz[0][0] + matriz[0][1] + matriz[1][0] + matriz[1][1]
+    eventos_despues = matriz[0][0] + matriz[1][0]
+    eficiencia = eventos_despues/eventos_antes
+    return eficiencia

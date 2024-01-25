@@ -373,3 +373,24 @@ def plot_pca_2D(model, df_X, df_y):
                          linewidth=0)
 
     return plt.gcf(), ax
+
+@dar_estilo_sns
+def graficar_datos(df, valor, color):
+    plt.figure(figsize=[5, 5])
+    colores_hue = {"ggF": "#FF5733", "VBF": "#03ef62"}
+    ax = sns.histplot(data=df, 
+                      x=valor, 
+                      hue=color, 
+                      palette=['#FF5733', '#03ef62'], 
+                      element='step', 
+                      multiple='layer',
+                      stat="density", 
+                      common_norm=True)
+    return plt.gcf(), ax
+
+def graficar_todos_datos(df, color):
+    for valor in df.columns:
+        print(valor)
+        if valor != 'origin_VBF' and valor != 'prediccion':
+            df_plot = df[(df[valor] > df[valor].quantile(0.005)) & (df[valor] < df[valor].quantile(0.995))]
+        graficar_datos(df_plot, valor, color)

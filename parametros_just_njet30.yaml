@@ -1,0 +1,205 @@
+VBF:
+  VBF_500757: data/samples/VBF/frvz_vbf_500757.root
+  VBF_500758: data/samples/VBF/frvz_vbf_500758.root
+  VBF_500759: data/samples/VBF/frvz_vbf_500759.root
+  VBF_500760: data/samples/VBF/frvz_vbf_500760.root
+  VBF_500761: data/samples/VBF/frvz_vbf_500761.root
+  VBF_500762: data/samples/VBF/frvz_vbf_500762.root
+  VBF_500763: data/samples/VBF/frvz_vbf_500763.root
+  VBF_500764: data/samples/VBF/frvz_vbf_500764.root
+  
+ggF:
+  ggF_508885: data/samples/ggF/frvz_ggf_508885.root
+  ggF_508886: data/samples/ggF/frvz_ggf_508886.root
+  ggF_508887: data/samples/ggF/frvz_ggf_508887.root
+  ggF_508888: data/samples/ggF/frvz_ggf_508888.root
+  ggF_508889: data/samples/ggF/frvz_ggf_508889.root
+  ggF_508890: data/samples/ggF/frvz_ggf_508890.root
+  ggF_508891: data/samples/ggF/frvz_ggf_508891.root
+  ggF_508892: data/samples/ggF/frvz_ggf_508892.root
+  ggF_508893: data/samples/ggF/frvz_ggf_508893.root
+
+recover_branches:       #Unidades que debería ser     
+  - njet30              # unico corte que hace sin ML
+  - mjj                 #(GeV)                       
+  - detajj              #Sin unidades (ángulo)
+  - dphijj              #Sin unidades (ángulo)
+  - MET                 #(GeV)
+  - scale1fb            #Escala luminosidad Femto-barn? # USADO PARA PESOS
+  - intLumi             #Escala luminosidad Femto-barn? # USADO PARA PESOS
+  # nuevas variables usadas por cristobal
+  - jet1_pt
+  - jet1_eta
+  - jet1_phi
+  - jet1_e
+  - jet2_pt
+  - jet2_eta
+  - jet2_phi
+  - jet2_e
+  # los de abajo no son usados
+  # - min_dphi_jetmet     #(GeV) creo
+  # - neleSignal          #N de señal
+  # - nmuSignal           #N de señal
+  # - metTrig
+
+  # - hasBjet
+  # - nLJmus20
+  # - LJjet1_timing
+  # - LJjet1_DPJtagger   #Los Tagger son maneras de agrupar o nombrar variables por lo que tampoco debería tener unidades.
+  # - LJjet1_jvt          #Sin unidades
+  # - LJjet1_isoID
+  # - nLJjets20
+  # - jet1_pt             #(GeV)
+  # - LJ1_type
+  
+detector_consts :
+  mevGev: 1000  
+  lum: 140 # Luminosity @ LHC Run-2 (fb-1)
+
+
+# cuts:   
+#   #Cortes con respecto a la nota.        
+#   #Corte:           #Valor:           #Comentarios: 
+#   #SE CAMBIA EL  NJ30 PORQUE NO ESTÁ TOMANDO LOS IGUALES A 2. PERO COMO SON DISCRETOS 
+#   #SE PUEDE TOMAR EL 1.     
+#   njet30: [1, .inf]                   #VBF FILTER: JETS >= 2  Falta el que esto se cumple con P_t > 30
+#   detajj: [3, .inf]                   #VBF FILTER: Delta Eta_jj 
+#   mjj: [1000000, .inf]                #VBF FILTER: MJJ
+
+#   dphijj: [-.inf, 2.5]                #max Delta phi (jet,jet) 
+#   neleSignal: 0                       #LEPTON Veto
+#   nmuSignal: 0                        #LEPTON Veto
+#   hasBjet: 0                          #B-jet Veto ES EL MISMO QUE EL b miniscula?????
+#   LJ1_type: 2                         #Calo-DPJ Selection
+#   metTrig: True                       #MET Trigger
+  
+#   # MET: [225000, .inf]                 #MET Falta ACÁ LOS INCLUIR LOS CASOS PARA ESTE O ESTE OTRO
+#   min_dphi_jetmet: [0.4, .inf]        #min Delta phi(jet, MET)
+#   LJjet1_timing: [-.inf, 4]           #max caloDPJ1 timing
+#   LJjet1_gapRatio: [0.9, .inf]        #min caloDPJ1 gap ratio
+#   LJjet1_BIBtagger: [0.2, .inf]       #min caloDPJ1 BIB tagger
+#   LJjet1_jvt: [-.inf, 0.4]            #max caloDPJ1 JVT
+#   LJjet1_DPJtagger: [0.5, .inf]       #min caloDPJ1 caloDPJtagger
+#   # ######LJjet1_DPJtagger: [0.9, 1]          #ABCD SR calo DPJ1 caloDPJtagger
+#   # LJjet1_isoID: [-.inf, 2000]         #ABCD SR caloDPJ1 isoID
+
+
+# # cortes mijail
+# cuts:   
+#   #Cortes con respecto a la nota.        
+#   #Corte:           #Valor:           #Comentarios:
+
+#     # lo que llaman VBF filter
+#   ######### cambio que se arreglo, no parte de 1, sino de 2
+#   njet30: [1, .inf]                   #VBF FILTER: JETS >= 2  Falta el que esto se cumple con P_t > 30
+#   detajj: [3, .inf]                   #VBF FILTER: Delta Eta_jj 
+#   mjj: [1000000, .inf]                #VBF FILTER: MJJ
+
+
+#   # dphijj: [-.inf, 2.048]                #max Delta phi (jet,jet) 
+#   dphijj: [-2.048, 2.048]                #max Delta phi (jet,jet) # asi lo tiene mijail <- REVISAR
+  
+#   neleSignal: 0                       #LEPTON Veto
+#   nmuSignal: 0                        #LEPTON Veto
+#   hasBjet: 0                          #B-jet Veto ES EL MISMO QUE EL b miniscula?????
+
+#   LJ1_type: 2                         #Calo-DPJ Selection
+
+#   metTrig: True                       #MET Trigger
+  
+#   # MET: [220000, .inf]                 #MET Falta ACÁ LOS INCLUIR LOS CASOS PARA ESTE O ESTE OTRO
+#   MET: [160000, .inf]                 #MET CORTE POSIBLE PRESENTAR
+
+#   min_dphi_jetmet: [0.32, .inf]        #min Delta phi(jet, MET)
+
+#   LJjet1_timing: [-.inf, 6]           #max caloDPJ1 timing
+#   LJjet1_gapRatio: [0.91, .inf]        #min caloDPJ1 gap ratio
+#   LJjet1_BIBtagger: [0.2, .inf]       #min caloDPJ1 BIB tagger
+#   LJjet1_jvt: [-.inf, 0.37]            #max caloDPJ1 JVT
+  
+#   # LJjet1_DPJtagger: [0.5, .inf]       #min caloDPJ1 caloDPJtagger
+#   LJjet1_DPJtagger: [0.96, .inf]       #min caloDPJ1 caloDPJtagger
+
+#   # LJjet1_DPJtagger: [0.9, 1]          #ABCD SR calo DPJ1 caloDPJtagger
+#   LJjet1_isoID: [-.inf, 2000]         #ABCD SR caloDPJ1 isoID
+
+
+
+# cortes notas
+cuts:   
+  #Cortes con respecto a la nota.        
+  #Corte:           #Valor:           #Comentarios:
+
+    # lo que llaman VBF filter
+  ######### cambio que se arreglo, no parte de 1, sino de 2
+  # no hacen nada
+  njet30: [1, .inf]                   #VBF FILTER: JETS >= 2  Falta el que esto se cumple con P_t > 30
+  # detajj: [3, .inf]                   #VBF FILTER: Delta Eta_jj 
+  # mjj: [1000000, .inf]                #VBF FILTER: MJJ
+  # mjj: [900000, .inf]                #VBF FILTER: MJJ
+
+
+  # dphijj: [-.inf, 2.048]                #max Delta phi (jet,jet) 
+  # dphijj: [-.inf, 2.5]                #max Delta phi (jet,jet) # asi lo tiene mijail <- REVISAR
+  # dphijj: [-.inf, 1.5]                # significancia mayor: corte: 2.85, casi iguales: [2.05, 1.87, 1.63, 1.51], mejor eficiencia: 0, asi que tomo 1.51, que está más cerca
+  # variables  n_datos_background  n_datos_signal  eficiencias  significancias      weights
+  # dphijj            20163310           29288        0.788           0.016  1751.150146 , corte:2.5
+  # dphijj            15945638           23969        0.623           0.020  1430.020874 , corte:1.5, pero significancia final bajó
+  # dphijj: [-.inf, 1.63]                # lo mejora pero no es el mejor
+  # dphijj: [-.inf, 2.05]                # lo mejora
+  
+  
+  # dphijj: [-2.05, 2.05]                # lo mejora
+
+  
+  # neleSignal: 0                       #LEPTON Veto
+  # nmuSignal: 0                        #LEPTON Veto
+  # hasBjet: 0                          #B-jet Veto ES EL MISMO QUE EL b miniscula?????
+
+  # LJ1_type: 2                         #Calo-DPJ Selection
+
+  # metTrig: True                       #MET Trigger
+  
+  # MET: [225000, .inf]                 #MET ORIGINAL
+  # MET: [160000, .inf]                 #MET CORTE POSIBLE PRESENTAR
+
+  # # min_dphi_jetmet: [0.4, .inf]        #min Delta phi(jet, MET)
+  # min_dphi_jetmet: [1.216, .inf]        #min Delta phi(jet, MET) CORTE POSIBLE PRESENTAR DE MIJAIL
+
+  # LJjet1_timing: [-.inf, 4]           #max caloDPJ1 timing
+  # # LJjet1_timing: [-.inf, 0.26]           #max caloDPJ1 timing # no lo mejora
+  # # LJjet1_timing: [-.inf, 2]           #max caloDPJ1 timing # no mejora, ni eff ni sig
+
+  # LJjet1_gapRatio: [0.9, .inf]        #min caloDPJ1 gap ratio
+  # LJjet1_BIBtagger: [0.2, .inf]       #min caloDPJ1 BIB tagger
+
+  # # LJjet1_jvt: [-.inf, 0.4]            #max caloDPJ1 JVT # original
+  # # LJjet1_jvt: [-.inf, 0.93]            #max caloDPJ1 JVT # interseccion en eff
+  # # LJjet1_jvt: [-.inf, 0.7]            #max caloDPJ1 JVT # punto intermedio, sig aún en 0.9
+  # # LJjet1_jvt: [-.inf, 0.56]            #max caloDPJ1 JVT # máxima significancia
+  # LJjet1_jvt: [-.inf, 0.32]            #max caloDPJ1 JVT # máxima significancia
+  
+  # LJjet1_DPJtagger: [0.5, .inf]       #min caloDPJ1 caloDPJtagger
+
+
+  # no usar ABCD, no sé como usarlo
+  # LJjet1_DPJtagger: [0.9, 1]          #ABCD SR calo DPJ1 caloDPJtagger
+  # LJjet1_isoID: [-.inf, 2000]         #ABCD SR caloDPJ1 isoID
+
+
+scale_variable:
+  njet30: 1
+  detajj: 1
+  mjj: 0.001
+  dphijj: 1
+  MET: 0.001
+  # min_dphi_jetmet: 1
+  # neleSignal: 1
+  # nmuSignal: 1
+  # hasBjet: 1
+  # LJjet1_timing: 1
+  # LJjet1_gapRatio: 1
+  # LJjet1_BIBtagger: 1 
+  # LJjet1_jvt: 1
+  # LJjet1_DPJtagger: 1
+  # LJjet1_isoID: 0.001
