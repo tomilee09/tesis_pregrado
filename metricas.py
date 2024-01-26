@@ -44,8 +44,11 @@ def precision(modelo, X_test, y_test):
 #                 Predicción Positivo    Predicción Negativo
 # Actual Positivo        TN                    FP
 # Actual Negativo        FN                    TP
-def confusion(y_test, y_pred):
-    m = confusion_matrix(y_test, y_pred)
+def confusion(y_test, y_pred, weight=""):
+    if type(weight) == type(""):
+        m = confusion_matrix(y_test, y_pred)
+    else:
+        m = confusion_matrix(y_test, y_pred, sample_weight=weight)
     matriz = [[m[1][1], m[1][0]], [m[0][1], m[0][0]]]
     return matriz
     # display_matriz = ConfusionMatrixDisplay(confusion_matrix=matriz)
